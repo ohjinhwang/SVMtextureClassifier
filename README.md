@@ -8,6 +8,4 @@ The code involves the following steps.
 2) Marrow segmentation using a 3D GrowCut algorithm
 3) Feature extraction 
 4) Data preparation for SVM 
-5) Two-class SVM with separate data set 
-
- 
+5) Two-class SVM using libsvm  
