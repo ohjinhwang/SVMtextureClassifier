@@ -26,29 +26,34 @@ hold on;
 
 % normalization using disk 
 
-[x y] = getpts;
+for numpt = 1:2 
 
-xx = floor(x);
-yy = floor(y);
+    [x y] = getpts;
 
-x_edge = [xx-3,xx+3,xx-3,xx+3];
-y_edge = [yy-3,yy-3,yy+3,yy+3];
+    xx = floor(x);
+    yy = floor(y);
 
-grid_x = [min(x_edge):max(x_edge)];
-grid_y = [min(y_edge):max(y_edge)];
+    x_edge = [xx-3,xx+3,xx-3,xx+3];
+    y_edge = [yy-3,yy-3,yy+3,yy+3];
 
-[ROW COL] = meshgrid(grid_x,grid_y);
+    grid_x = [min(x_edge):max(x_edge)];
+    grid_y = [min(y_edge):max(y_edge)];
 
-for r = 1:size(COL,1)
-    for c = 1:size(COL,2)
+    [ROW COL] = meshgrid(grid_x,grid_y);
+
+    for r = 1:size(COL,1)
+        for c = 1:size(COL,2)
         
-        sig{1,1}(r,c) = img{1,1}(COL(r,c),ROW(r,c),11);
+            sig{1,1}(r,c,numpt) = img{1,1}(COL(r,c),ROW(r,c),11);
         
+        end
     end
-end
 
-disc_sig = mean(mean(sig{1,1}));
-norm = img{1,1} - disc_sig;
+    disc_sig(numpt) = mean(mean(sig{1,1}(:,:,numpt)));
+
+end 
+
+norm = img{1,1} - mean(disc_sig);
 
 %% Part 2: Marrow segmentation using a GrowCut algorithm 
 
